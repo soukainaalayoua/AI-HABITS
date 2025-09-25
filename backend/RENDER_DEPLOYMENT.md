@@ -5,27 +5,32 @@
 Configurez ces variables dans Render Dashboard → Environment Variables :
 
 ### Base de données
+
 ```
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database
 ```
 
 ### Authentification
+
 ```
 JWT_SECRET=your-super-secret-jwt-key-here
 ```
 
 ### Email (Gmail)
+
 ```
 GMAIL_USER=your-email@gmail.com
 GMAIL_PASS=your-app-password
 ```
 
 ### OpenAI API
+
 ```
 OPENAI_API_KEY=your-openai-api-key
 ```
 
 ### Configuration serveur
+
 ```
 NODE_ENV=production
 PORT=10000
@@ -54,6 +59,7 @@ Une fois déployé, vous obtiendrez une URL comme :
 `https://ai-habits-backend.onrender.com`
 
 Cette URL sera utilisée pour configurer Vercel :
+
 ```
 VITE_API_BASE_URL=https://ai-habits-backend.onrender.com/api
 ```

@@ -17,3 +17,4 @@
 # Variables d'environnement à configurer dans Vercel Dashboard :
 
 # VITE_API_BASE_URL = URL de votre backend déployé
+
