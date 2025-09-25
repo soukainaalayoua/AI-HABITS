@@ -113,6 +113,12 @@ const createUser = async (req, res) => {
       newUser._id
     );
 
+    // Log verification code for testing (Railway logs)
+    console.log("🔐 VERIFICATION CODE FOR TESTING:");
+    console.log(`📧 Email: ${newUser.email}`);
+    console.log(`🔑 Code: ${verificationToken.token}`);
+    console.log("🔐 END VERIFICATION CODE");
+
     // Send verification email
     try {
       await sendEmail({
@@ -423,6 +429,12 @@ const resendVerification = async (req, res) => {
 
     // Generate new verification token
     const verificationToken = await VerificationToken.generateToken(user._id);
+
+    // Log verification code for testing (Railway logs)
+    console.log("🔐 RESEND VERIFICATION CODE FOR TESTING:");
+    console.log(`📧 Email: ${user.email}`);
+    console.log(`🔑 Code: ${verificationToken.token}`);
+    console.log("🔐 END RESEND VERIFICATION CODE");
 
     // Send verification email
     try {
