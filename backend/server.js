@@ -19,12 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 // CORS configuration
 app.use(
   cors({
-    origin: process.env.NODE_ENV === 'production' 
-      ? [
-          "https://ai-habit-frontend.vercel.app",
-          "https://aihabits.netlify.app",
-          process.env.FRONTEND_URL
-        ]
+    origin: process.env.NODE_ENV === "production" 
+      ? true  // Accepte toutes les origines en production
       : "http://localhost:5173",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
