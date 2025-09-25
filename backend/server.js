@@ -16,32 +16,14 @@ const app = express();
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// CORS configuration - Plus permissive pour le déploiement
+// CORS configuration - Permissive pour Railway
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Autoriser les requêtes sans origin (mobile apps, Postman, etc.)
-      if (!origin) return callback(null, true);
-      
-      const allowedOrigins = [
-        "https://ai-habit-frontend.vercel.app",
-        "https://frontend-ai-habit.vercel.app", 
-        "https://aihabits.netlify.app",
-        "http://localhost:5173",
-        "http://localhost:3000"
-      ];
-      
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        console.log(`CORS blocked origin: ${origin}`);
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: true, // Accepter toutes les origines pour le déploiement
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-    optionsSuccessStatus: 200 // Pour les anciens navigateurs
+    optionsSuccessStatus: 200
   })
 );
 
