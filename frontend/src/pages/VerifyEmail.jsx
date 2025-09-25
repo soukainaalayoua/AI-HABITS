@@ -14,6 +14,7 @@ export default function VerifyEmail() {
 
   const token = searchParams.get("token");
   const emailFromUrl = searchParams.get("email");
+  const codeFromUrl = searchParams.get("code");
 
   useEffect(() => {
     if (emailFromUrl) {
@@ -23,10 +24,18 @@ export default function VerifyEmail() {
       );
     }
 
+    // Pré-remplir le code si fourni dans l'URL
+    if (codeFromUrl) {
+      setVerificationCode(codeFromUrl);
+      setMessage(
+        `Code de vérification reçu ! Utilisez le code ${codeFromUrl} pour vérifier votre compte.`
+      );
+    }
+
     if (token) {
       verifyEmail();
     }
-  }, [token, emailFromUrl]);
+  }, [token, emailFromUrl, codeFromUrl]);
 
   const verifyEmail = async () => {
     try {

@@ -18,15 +18,27 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS middleware manuel pour Railway
 app.use((req, res, next) => {
-  // Autoriser toutes les origines
-  res.header("Access-Control-Allow-Origin", "*");
+  // Autoriser spécifiquement Vercel et localhost
+  const allowedOrigins = [
+    "https://ai-habit-frontend.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000"
+  ];
+  
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  } else {
+    res.header("Access-Control-Allow-Origin", "*");
+  }
+  
   res.header(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
   res.header(
     "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, X-Requested-With"
+    "Content-Type, Authorization, X-Requested-With, Accept, Origin"
   );
   res.header("Access-Control-Allow-Credentials", "true");
 
