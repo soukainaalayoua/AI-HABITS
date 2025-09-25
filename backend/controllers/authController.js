@@ -184,8 +184,7 @@ const createUser = async (req, res) => {
         isVerified: newUser.isVerified,
         createdAt: newUser.createdAt,
       },
-      // Code de vérification temporaire pour le développement
-      verificationCode: verificationToken.token,
+      // Code de vérification supprimé - maintenant envoyé par email
       // Ne pas envoyer de token JWT tant que l'email n'est pas vérifié
     });
   } catch (error) {
