@@ -24,24 +24,33 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlength: [6, "password must be at 8 characters"],
+      minlength: [8, "password must be at least 8 characters"],
     },
     role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      default: null,
+    },
+    verificationTokenExpires: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true }
 );
 
-// Hashing password before saving
+// Hash password before saving
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-
-  //   const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(this.password, 10);
-  this.password = hashedPassword;
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
