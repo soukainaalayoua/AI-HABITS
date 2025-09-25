@@ -126,4 +126,4 @@ Développé avec ❤️ par soukaina
 ---
 
 **Version** : 1.0.0  
-**Dernière mise à jour** : Septembre 2024
+**Dernière mise à jour** : Septembre 2025
