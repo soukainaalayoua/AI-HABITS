@@ -15,6 +15,7 @@ Une application web moderne pour suivre et améliorer vos habitudes quotidiennes
 ## 🚀 Technologies utilisées
 
 ### Frontend
+
 - **React 18** avec Vite
 - **Tailwind CSS** pour le design
 - **Axios** pour les requêtes API
@@ -22,6 +23,7 @@ Une application web moderne pour suivre et améliorer vos habitudes quotidiennes
 - **Chart.js** pour les graphiques
 
 ### Backend
+
 - **Node.js** avec Express
 - **MongoDB** avec Mongoose
 - **JWT** pour l'authentification
@@ -31,11 +33,13 @@ Une application web moderne pour suivre et améliorer vos habitudes quotidiennes
 ## 📦 Installation
 
 ### Prérequis
+
 - Node.js (v16 ou plus récent)
 - MongoDB Atlas (ou MongoDB local)
 - Compte Gmail avec mot de passe d'application
 
 ### Backend
+
 ```bash
 cd backend
 npm install
@@ -45,6 +49,7 @@ npm start
 ```
 
 ### Frontend
+
 ```bash
 cd frontend
 npm install
@@ -56,6 +61,7 @@ npm run dev
 ## 🔧 Configuration
 
 ### Variables d'environnement Backend (.env)
+
 ```env
 NODE_ENV=development
 PORT=3000
@@ -68,6 +74,7 @@ GMAIL_PASS=your-app-password
 ```
 
 ### Variables d'environnement Frontend (.env)
+
 ```env
 VITE_API_BASE_URL=http://localhost:3000/api
 ```
@@ -83,23 +90,27 @@ VITE_API_BASE_URL=http://localhost:3000/api
 ## 📊 API Endpoints
 
 ### Authentification
+
 - `POST /api/auth/register` - Inscription
 - `POST /api/auth/login` - Connexion
 - `POST /api/auth/verify-email` - Vérification email
 
 ### Habitudes
+
 - `GET /api/habits` - Liste des habitudes
 - `POST /api/habits` - Créer une habitude
 - `PUT /api/habits/:id` - Modifier une habitude
 - `DELETE /api/habits/:id` - Supprimer une habitude
 
 ### Suivi
+
 - `GET /api/tracking` - Historique de suivi
 - `POST /api/tracking` - Enregistrer un suivi
 
 ## 🤝 Contribution
 
 Les contributions sont les bienvenues ! N'hésitez pas à :
+
 - Signaler des bugs
 - Proposer des améliorations
 - Soumettre des pull requests
@@ -110,7 +121,7 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 ## 👨‍💻 Auteur
 
-Développé avec ❤️ par [Votre nom]
+Développé avec ❤️ par soukaina
 
 ---
 
