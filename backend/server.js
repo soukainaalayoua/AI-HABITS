@@ -57,7 +57,7 @@ app.use((req, res, next) => {
 
 // Log all requests
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path} - Railway CORS Fixed`);
   next();
 });
 
