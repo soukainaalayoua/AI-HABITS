@@ -19,8 +19,4 @@ primary_region = "par"
 [[vm]]
   cpu_kind = "shared"
   cpus = 1
-  memory_mb = 256
-
-[[statics]]
-  guest_path = "/app/public"
-  url_prefix = "/public/"
+  memory_mb = 512
