@@ -22,16 +22,21 @@ app.use((req, res, next) => {
   const allowedOrigins = [
     "https://ai-habit-frontend.vercel.app",
     "http://localhost:5173",
-    "http://localhost:3000"
+    "http://localhost:3000",
   ];
-  
+
   const origin = req.headers.origin;
+  console.log(`CORS - Origin: ${origin}`);
+
   if (allowedOrigins.includes(origin)) {
     res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Credentials", "true");
   } else {
+    // Pour les requêtes sans origine (comme Postman) ou autres
     res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Credentials", "false");
   }
-  
+
   res.header(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
@@ -40,7 +45,6 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Content-Type, Authorization, X-Requested-With, Accept, Origin"
   );
-  res.header("Access-Control-Allow-Credentials", "true");
 
   // Répondre aux requêtes OPTIONS (preflight)
   if (req.method === "OPTIONS") {
