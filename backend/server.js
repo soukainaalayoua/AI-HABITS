@@ -22,11 +22,11 @@ const cors = require("cors");
 const corsOptions = {
   origin: function (origin, callback) {
     console.log(`🌐 CORS Request from: ${origin}`);
-    
+
     // Liste des origines autorisées
     const allowedOrigins = [
       "https://ai-habit-frontend.vercel.app",
-      "https://backend-ai-habits-production.up.railway.app",
+      "https://ai-habits-backend.herokuapp.com",
       "http://localhost:5173",
       "http://localhost:3000",
       "http://localhost:3001",
@@ -66,7 +66,7 @@ app.use((req, res, next) => {
   console.log(
     `${new Date().toISOString()} - ${req.method} ${
       req.path
-    } - Railway CORS Fixed v4.0 with cors package`
+    } - Heroku CORS Fixed v5.0`
   );
   console.log(`🔍 Request Headers Origin: ${req.headers.origin}`);
   console.log(
@@ -84,7 +84,7 @@ app.get("/health", (req, res) => {
     status: "OK",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || "development",
-    corsVersion: "v4.0",
+    corsVersion: "v5.0",
   });
 });
 
@@ -94,7 +94,7 @@ app.get("/cors-test", (req, res) => {
     message: "CORS test successful",
     origin: req.headers.origin,
     timestamp: new Date().toISOString(),
-    corsVersion: "v4.0",
+    corsVersion: "v5.0",
   });
 });
 
