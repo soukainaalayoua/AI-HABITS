@@ -20,14 +20,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   console.log(`🌐 CORS Request from: ${origin}`);
-  
+
   // Liste des origines autorisées
   const allowedOrigins = [
     "https://ai-habit-frontend.vercel.app",
     "https://ai-habits-backend-production.up.railway.app",
     "http://localhost:5173",
     "http://localhost:3000",
-    "http://localhost:3001"
+    "http://localhost:3001",
   ];
 
   // Vérifier si l'origine est autorisée
@@ -48,8 +48,14 @@ app.use((req, res, next) => {
   }
 
   // Headers CORS
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin, X-CSRF-Token");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, X-Requested-With, Accept, Origin, X-CSRF-Token"
+  );
   res.header("Access-Control-Max-Age", "86400"); // Cache preflight pour 24h
 
   // Gérer les requêtes preflight OPTIONS
@@ -62,13 +68,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// Log all requests
+// Log all requests with detailed CORS info
 app.use((req, res, next) => {
   console.log(
-    `${new Date().toISOString()} - ${req.method} ${
-      req.path
-    } - Railway CORS Fixed`
+    `${new Date().toISOString()} - ${req.method} ${req.path} - Railway CORS Fixed v2.0`
   );
+  console.log(`🔍 Request Headers Origin: ${req.headers.origin}`);
+  console.log(`🔍 Request Headers User-Agent: ${req.headers['user-agent']?.substring(0, 50)}...`);
   next();
 });
 
@@ -78,6 +84,17 @@ app.get("/health", (req, res) => {
     status: "OK",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || "development",
+    corsVersion: "v2.0",
+  });
+});
+
+// CORS test endpoint
+app.get("/cors-test", (req, res) => {
+  res.status(200).json({
+    message: "CORS test successful",
+    origin: req.headers.origin,
+    timestamp: new Date().toISOString(),
+    corsVersion: "v2.0",
   });
 });
 
