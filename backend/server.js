@@ -18,10 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS middleware manuel pour Railway
 app.use((req, res, next) => {
-  // Autoriser spécifiquement Vercel, Fly.io et localhost
+  // Autoriser spécifiquement Vercel et localhost
   const allowedOrigins = [
     "https://ai-habit-frontend.vercel.app",
-    "https://ai-habits-backend.fly.dev",
     "http://localhost:5173",
     "http://localhost:3000",
   ];
