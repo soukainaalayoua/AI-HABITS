@@ -16,38 +16,45 @@ const app = express();
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// CORS middleware manuel pour Railway
+// CORS middleware robuste pour Railway et Vercel
 app.use((req, res, next) => {
-  // Autoriser spécifiquement Vercel et localhost
+  const origin = req.headers.origin;
+  console.log(`🌐 CORS Request from: ${origin}`);
+  
+  // Liste des origines autorisées
   const allowedOrigins = [
     "https://ai-habit-frontend.vercel.app",
+    "https://ai-habits-backend-production.up.railway.app",
     "http://localhost:5173",
     "http://localhost:3000",
+    "http://localhost:3001"
   ];
 
-  const origin = req.headers.origin;
-  console.log(`CORS - Origin: ${origin}`);
-
+  // Vérifier si l'origine est autorisée
   if (allowedOrigins.includes(origin)) {
     res.header("Access-Control-Allow-Origin", origin);
     res.header("Access-Control-Allow-Credentials", "true");
+    console.log(`✅ CORS Allowed for: ${origin}`);
+  } else if (origin) {
+    // Si l'origine existe mais n'est pas dans la liste, la refuser explicitement
+    console.log(`❌ CORS Blocked for: ${origin}`);
+    res.header("Access-Control-Allow-Origin", "null");
+    res.header("Access-Control-Allow-Credentials", "false");
   } else {
-    // Pour les requêtes sans origine (comme Postman) ou autres
+    // Pour les requêtes sans origine (Postman, curl, etc.)
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Credentials", "false");
+    console.log(`🔓 CORS Open for no-origin request`);
   }
 
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, X-Requested-With, Accept, Origin"
-  );
+  // Headers CORS
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin, X-CSRF-Token");
+  res.header("Access-Control-Max-Age", "86400"); // Cache preflight pour 24h
 
-  // Répondre aux requêtes OPTIONS (preflight)
+  // Gérer les requêtes preflight OPTIONS
   if (req.method === "OPTIONS") {
+    console.log(`🔄 Preflight request handled for: ${origin}`);
     res.status(200).end();
     return;
   }
@@ -57,7 +64,11 @@ app.use((req, res, next) => {
 
 // Log all requests
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path} - Railway CORS Fixed`);
+  console.log(
+    `${new Date().toISOString()} - ${req.method} ${
+      req.path
+    } - Railway CORS Fixed`
+  );
   next();
 });
 
