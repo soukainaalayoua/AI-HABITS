@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// CORS middleware robuste pour Railway et Vercel
+// CORS middleware robuste pour Render.com et Vercel
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   console.log(`🌐 CORS Request from: ${origin}`);
@@ -24,7 +24,7 @@ app.use((req, res, next) => {
   // Liste des origines autorisées
   const allowedOrigins = [
     "https://ai-habit-frontend.vercel.app",
-    "https://ai-habits-backend-production.up.railway.app",
+    "https://ai-habits-backend.onrender.com",
     "http://localhost:5173",
     "http://localhost:3000",
     "http://localhost:3001",
@@ -71,10 +71,17 @@ app.use((req, res, next) => {
 // Log all requests with detailed CORS info
 app.use((req, res, next) => {
   console.log(
-    `${new Date().toISOString()} - ${req.method} ${req.path} - Railway CORS Fixed v2.0`
+    `${new Date().toISOString()} - ${req.method} ${
+      req.path
+    } - Render.com CORS Fixed v3.0`
   );
   console.log(`🔍 Request Headers Origin: ${req.headers.origin}`);
-  console.log(`🔍 Request Headers User-Agent: ${req.headers['user-agent']?.substring(0, 50)}...`);
+  console.log(
+    `🔍 Request Headers User-Agent: ${req.headers["user-agent"]?.substring(
+      0,
+      50
+    )}...`
+  );
   next();
 });
 
@@ -84,7 +91,7 @@ app.get("/health", (req, res) => {
     status: "OK",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || "development",
-    corsVersion: "v2.0",
+    corsVersion: "v3.0",
   });
 });
 
@@ -94,7 +101,7 @@ app.get("/cors-test", (req, res) => {
     message: "CORS test successful",
     origin: req.headers.origin,
     timestamp: new Date().toISOString(),
-    corsVersion: "v2.0",
+    corsVersion: "v3.0",
   });
 });
 
