@@ -41,3 +41,5 @@ Utiliser un service de proxy CORS comme `cors-anywhere` ou `allorigins.win`
 3. Vérifier que toutes les fonctionnalités marchent
 
 
+
+
