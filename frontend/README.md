@@ -94,24 +94,29 @@ frontend/src/
 ## 🚀 Installation
 
 ### **Prerequisites**
+
 - Node.js 18+
 - Functional backend API
 
 ### **1. Install Dependencies**
+
 ```bash
 cd frontend
 npm install
 ```
 
 ### **2. Configuration**
+
 The frontend automatically connects to the backend on `http://localhost:3000/api`.
 
 To change the API URL, create a `.env` file:
+
 ```env
 VITE_API_BASE_URL=http://localhost:3000/api
 ```
 
 ### **3. Start**
+
 ```bash
 npm run dev
 ```
@@ -121,6 +126,7 @@ The application will be accessible at `http://localhost:5173`
 ## 🎨 Design System
 
 ### **Color Palette**
+
 - **Primary** : Fuchsia (`#D946EF`)
 - **Secondary** : Violet (`#8B5CF6`)
 - **Accent** : Cyan (`#06B6D4`)
@@ -128,11 +134,13 @@ The application will be accessible at `http://localhost:5173`
 - **Text** : White and gray
 
 ### **Typography**
+
 - **Main font** : Inter, system-ui, sans-serif
 - **Display font** : Poppins (titles)
 - **Sizes** : Responsive (sm, base, lg, xl, 2xl, etc.)
 
 ### **Components**
+
 - **Borders** : Rounded (lg, xl, 2xl)
 - **Shadows** : Subtle with hover effects
 - **Animations** : Framer Motion for transitions
@@ -141,12 +149,14 @@ The application will be accessible at `http://localhost:5173`
 ## 📱 Pages and Features
 
 ### **🏠 Homepage**
+
 - Hero section with animated gradient
 - Feature presentation
 - Call-to-action for registration
 - Modern and welcoming design
 
 ### **🔐 Authentication**
+
 - **Login** : Login with validation
 - **Register** : Registration with confirmation
 - Real-time validation
@@ -154,6 +164,7 @@ The application will be accessible at `http://localhost:5173`
 - Loading states
 
 ### **📊 Dashboard**
+
 - Global statistics
 - Interactive charts:
   - Habit types (build/break)
@@ -167,6 +178,7 @@ The application will be accessible at `http://localhost:5173`
 - Management of existing habits
 
 ### **🤖 AI Chat**
+
 - Modern chat interface
 - Messages with timestamps
 - Typing indicator
@@ -175,6 +187,7 @@ The application will be accessible at `http://localhost:5173`
 - Question suggestions
 
 ### **📧 Contact**
+
 - Complete contact form
 - Client-side validation
 - Confirmation messages
@@ -183,6 +196,7 @@ The application will be accessible at `http://localhost:5173`
 - Responsive design
 
 ### **ℹ️ Informational Pages**
+
 - **About** : About the project
 - **Suggestions** : Tips and suggestions
 - **Profile** : User profile management
@@ -190,6 +204,7 @@ The application will be accessible at `http://localhost:5173`
 ## 🔧 API Integration
 
 ### **Axios Configuration**
+
 ```javascript
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api",
@@ -197,10 +212,12 @@ const api = axios.create({
 ```
 
 ### **Interceptors**
+
 - **Request** : Automatic JWT token addition
 - **Response** : 401 error handling with redirection
 
 ### **Used Endpoints**
+
 - `POST /auth/register` - Registration
 - `POST /auth/login` - Login
 - `GET /auth/me` - User profile
@@ -214,6 +231,7 @@ const api = axios.create({
 ## 🎭 Animations and Interactions
 
 ### **Framer Motion**
+
 - Page entry animations
 - Smooth state transitions
 - Hover and tap effects
@@ -221,6 +239,7 @@ const api = axios.create({
 - Micro-interactions
 
 ### **Animation Examples**
+
 ```javascript
 // Entry animation
 <motion.div
@@ -239,6 +258,7 @@ const api = axios.create({
 ## 📊 Charts and Visualizations
 
 ### **Chart Components**
+
 - **HabitTypeChart** : Distribution by type
 - **FrequencyChart** : Frequency analysis
 - **WeeklyProgressChart** : Weekly progression
@@ -247,6 +267,7 @@ const api = axios.create({
 - **BuildVsBreakChart** : Constructive/destructive comparison
 
 ### **Features**
+
 - Consistent design with theme
 - Appearance animations
 - Harmonized colors
@@ -256,16 +277,19 @@ const api = axios.create({
 ## 🔒 Frontend Security
 
 ### **Route Protection**
+
 - Protected routes with `ProtectedRoute`
 - Automatic redirection if not authenticated
 - JWT token verification
 
 ### **Token Management**
+
 - Secure storage in localStorage
 - Automatic deletion on expiration
 - Automatic addition to API requests
 
 ### **Form Validation**
+
 - Client-side validation
 - Clear error messages
 - Prevention of invalid submissions
@@ -273,11 +297,13 @@ const api = axios.create({
 ## 📱 Responsive Design
 
 ### **Tailwind Breakpoints**
+
 - **Mobile** : `< 640px`
 - **Tablet** : `640px - 1024px`
 - **Desktop** : `> 1024px`
 
 ### **Adaptations**
+
 - Mobile navigation with hamburger menu
 - Adaptive grids
 - Responsive texts and spacing
@@ -286,28 +312,31 @@ const api = axios.create({
 ## 🚀 Build and Deployment
 
 ### **Production Build**
+
 ```bash
 npm run build
 ```
 
 ### **Preview**
+
 ```bash
 npm run preview
 ```
 
 ### **Deployment**
+
 - **Vercel** : Automatic deployment
-- **Netlify** : Drag & drop of `dist/` folder
-- **GitHub Pages** : Automatic actions
 
 ## 🧪 Testing and Quality
 
 ### **Linting**
+
 ```bash
 npm run lint
 ```
 
 ### **Manual Tests**
+
 - Navigation between pages
 - Complete authentication
 - Habit creation and management
@@ -318,7 +347,9 @@ npm run lint
 ## 🔧 Customization
 
 ### **Theme**
+
 Modify colors in `tailwind.config.js`:
+
 ```javascript
 colors: {
   primary: '#D946EF',    // Fuchsia
@@ -328,14 +359,17 @@ colors: {
 ```
 
 ### **Animations**
+
 Adjust animations in Framer Motion components.
 
 ### **Components**
+
 All components are modular and customizable.
 
 ## 📝 Changelog
 
 ### **Version 1.0.0**
+
 - ✅ Complete user interface
 - ✅ Integrated authentication
 - ✅ Dashboard with charts

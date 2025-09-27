@@ -150,11 +150,13 @@ const createUser = async (req, res) => {
               <p style="color: #666; font-size: 14px; line-height: 1.5; text-align: center;">
                 Utilisez ce code de 6 chiffres sur la page de vérification :<br>
                 <a href="${
-                  process.env.FRONTEND_URL || "http://localhost:5173"
+                  process.env.FRONTEND_URL ||
+                  "https://ai-habit-frontend.vercel.app"
                 }/verify-email" 
                    style="color: #667eea;">
                   ${
-                    process.env.FRONTEND_URL || "http://localhost:5173"
+                    process.env.FRONTEND_URL ||
+                    "https://ai-habit-frontend.vercel.app"
                   }/verify-email
                 </a>
               </p>
@@ -466,11 +468,13 @@ const resendVerification = async (req, res) => {
               <p style="color: #666; font-size: 14px; line-height: 1.5; text-align: center;">
                 Utilisez ce code de 6 chiffres sur la page de vérification :<br>
                 <a href="${
-                  process.env.FRONTEND_URL || "http://localhost:5173"
+                  process.env.FRONTEND_URL ||
+                  "https://ai-habit-frontend.vercel.app"
                 }/verify-email" 
                    style="color: #667eea;">
                   ${
-                    process.env.FRONTEND_URL || "http://localhost:5173"
+                    process.env.FRONTEND_URL ||
+                    "https://ai-habit-frontend.vercel.app"
                   }/verify-email
                 </a>
               </p>

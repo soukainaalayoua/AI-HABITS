@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import api from "../services/api";
@@ -7,6 +7,8 @@ import { useAuth } from "../context/AuthContext";
 export default function Register() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const isMountedRef = useRef(true);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -20,27 +22,41 @@ export default function Register() {
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [registeredEmail, setRegisteredEmail] = useState("");
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
   const handleChange = (e) => {
+    if (!isMountedRef.current) return;
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError(""); // Clear error when user types
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isMountedRef.current) return;
+
     setLoading(true);
     setError("");
 
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      setLoading(false);
+      if (isMountedRef.current) {
+        setError("Passwords do not match");
+        setLoading(false);
+      }
       return;
     }
 
     // Validate password length
     if (formData.password.length < 8) {
-      setError("Password must be at least 8 characters long");
-      setLoading(false);
+      if (isMountedRef.current) {
+        setError("Password must be at least 8 characters long");
+        setLoading(false);
+      }
       return;
     }
 
@@ -49,32 +65,39 @@ export default function Register() {
       console.log("Sending registration data:", dataToSend);
       const response = await api.post("/auth/register", dataToSend);
 
-      // Registration successful - redirect to verification page
-      setRegistrationSuccess(true);
-      setRegisteredEmail(formData.email);
+      // Check if component is still mounted before updating state
+      if (isMountedRef.current) {
+        // Registration successful - redirect to verification page
+        setRegistrationSuccess(true);
+        setRegisteredEmail(formData.email);
 
-      // Redirect to verification page immediately
-      navigate(`/verify-email?email=${encodeURIComponent(formData.email)}`);
+        // Redirect to verification page immediately
+        navigate(`/verify-email?email=${encodeURIComponent(formData.email)}`);
 
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+      }
     } catch (err) {
       console.error("Registration error:", err);
-      if (err.response?.data?.errors) {
-        setError(err.response.data.errors.join(", "));
-      } else {
-        setError(
-          err.response?.data?.message ||
-            "Erreur d'inscription. Veuillez réessayer."
-        );
+      if (isMountedRef.current) {
+        if (err.response?.data?.errors) {
+          setError(err.response.data.errors.join(", "));
+        } else {
+          setError(
+            err.response?.data?.message ||
+              "Erreur d'inscription. Veuillez réessayer."
+          );
+        }
       }
     } finally {
-      setLoading(false);
+      if (isMountedRef.current) {
+        setLoading(false);
+      }
     }
   };
 

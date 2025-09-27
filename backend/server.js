@@ -24,13 +24,7 @@ const corsOptions = {
     console.log(`🌐 CORS Request from: ${origin}`);
 
     // Liste des origines autorisées
-    const allowedOrigins = [
-      "https://ai-habit-frontend.vercel.app",
-      "https://ai-habits-backend.herokuapp.com",
-      "http://localhost:5173",
-      "http://localhost:3000",
-      "http://localhost:3001",
-    ];
+    const allowedOrigins = ["https://ai-habit-frontend.vercel.app"];
 
     // Autoriser les requêtes sans origine (Postman, curl, etc.)
     if (!origin) {
@@ -66,7 +60,7 @@ app.use((req, res, next) => {
   console.log(
     `${new Date().toISOString()} - ${req.method} ${
       req.path
-    } - Heroku CORS Fixed v5.0`
+    } - Railway CORS Fixed v5.0`
   );
   console.log(`🔍 Request Headers Origin: ${req.headers.origin}`);
   console.log(

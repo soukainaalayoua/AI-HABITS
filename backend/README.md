@@ -90,18 +90,21 @@ backend/
 ## 🚀 Installation
 
 ### **Prerequisites**
+
 - Node.js 18+
 - MongoDB (local or cloud)
 - OpenAI account
 - Gmail account (for emails)
 
 ### **1. Install Dependencies**
+
 ```bash
 cd backend
 npm install
 ```
 
 ### **2. Environment Variables Configuration**
+
 Create a `.env` file at the root of the backend folder:
 
 ```env
@@ -125,6 +128,7 @@ EMAIL_PASS=your-gmail-app-password
 ```
 
 ### **3. Start the Server**
+
 ```bash
 # Development mode with nodemon
 npm run dev
@@ -136,32 +140,39 @@ node server.js
 ## 🔧 API Endpoints
 
 ### **Authentication** (`/api/auth`)
+
 - `POST /register` - User registration
 - `POST /login` - User login
 - `GET /me` - Current user profile
 
 ### **Habits** (`/api/habits`)
+
 - `GET /` - List user habits
 - `POST /` - Create new habit
 - `PUT /:id` - Modify habit
 - `DELETE /:id` - Delete habit
 
 ### **Tracking** (`/api/tracking`)
+
 - `POST /` - Record tracking (done/missed)
 - `GET /` - Tracking history
 
 ### **AI Chat** (`/api/chat`)
+
 - `POST /` - Send message to AI chat
 
 ### **Contact** (`/api/contact`)
+
 - `POST /` - Send contact message
 
 ### **Health Check**
+
 - `GET /health` - Server status
 
 ## 📊 Data Models
 
 ### **User**
+
 ```javascript
 {
   firstName: String,
@@ -174,6 +185,7 @@ node server.js
 ```
 
 ### **Habit**
+
 ```javascript
 {
   title: String,
@@ -188,6 +200,7 @@ node server.js
 ```
 
 ### **Tracking**
+
 ```javascript
 {
   habit: ObjectId (ref: Habit),
@@ -201,18 +214,21 @@ node server.js
 ## 🤖 Artificial Intelligence
 
 ### **OpenAI Configuration**
+
 - Model: `gpt-4o-mini`
 - Token limit: 200-250 tokens
 - Temperature: 0.3 (precise responses)
 - Contextual analysis of user data
 
 ### **Response Types**
+
 - **Greetings**: Natural and welcoming responses
 - **Dashboard Questions**: Direct performance analysis
 - **Vague Questions**: Request for clarification
 - **Specific Questions**: Concrete and actionable responses
 
 ### **Context Provided to AI**
+
 - Total number of habits
 - Success statistics per habit
 - Best/worst performing habit
@@ -222,16 +238,19 @@ node server.js
 ## 📧 Email System
 
 ### **Gmail Configuration**
+
 1. Enable two-factor authentication
 2. Generate an app password
 3. Use this password in `EMAIL_PASS`
 
 ### **Email Types**
+
 - **Habit Reminders**: Automatic notifications
 - **Contact Messages**: User form
 - **Confirmations**: Action validation
 
 ### **Templates**
+
 - Styled HTML with gradients
 - Responsive design
 - Contextual information
@@ -240,12 +259,14 @@ node server.js
 ## ⏰ Reminder System
 
 ### **Cron Jobs**
+
 - Daily habit verification
 - Reminder sending according to configured time
 - Timezone management
 - Duplicate avoidance
 
 ### **Configuration**
+
 ```javascript
 // Daily execution at 6:00 AM
 cron.schedule("0 6 * * *", async () => {
@@ -256,16 +277,19 @@ cron.schedule("0 6 * * *", async () => {
 ## 🔒 Security
 
 ### **Authentication**
+
 - JWT tokens with expiration (24h)
 - Automatic refresh on client side
 - Protection middleware on all sensitive routes
 
 ### **Validation**
+
 - Input data validation
 - Request sanitization
 - Injection protection
 
 ### **CORS**
+
 - Secure configuration
 - Limited authorized origins
 - Appropriate headers
@@ -273,12 +297,14 @@ cron.schedule("0 6 * * *", async () => {
 ## 📈 Performance
 
 ### **Optimizations**
+
 - MongoDB indexes on frequent fields
 - Pagination for lists
 - Cached calculated statistics
 - Optimized queries
 
 ### **Monitoring**
+
 - Detailed error logs
 - Health check endpoint
 - Performance metrics
@@ -286,6 +312,7 @@ cron.schedule("0 6 * * *", async () => {
 ## 🧪 Testing
 
 ### **Manual Tests**
+
 ```bash
 # Health test
 curl http://localhost:3000/health
@@ -304,6 +331,7 @@ curl -X POST http://localhost:3000/api/contact \
 ## 🚀 Deployment
 
 ### **Production Environment Variables**
+
 ```env
 NODE_ENV=production
 MONGODB_URI=mongodb+srv://...
@@ -313,20 +341,20 @@ EMAIL_USER=production@domain.com
 EMAIL_PASS=production-app-password
 ```
 
-### **Recommended Platforms**
-- **Heroku**: Simple deployment
-- **Railway**: Modern alternative
-- **DigitalOcean**: Full control
-- **AWS**: Advanced scalability
+### **Recommended Platform**
+
+- **Railway**: Modern and reliable deployment platform
 
 ## 📝 Logs and Debug
 
 ### **Log Levels**
+
 - **Info**: Normal operations
 - **Warn**: Attention situations
 - **Error**: Critical errors
 
 ### **Log Format**
+
 ```javascript
 console.log(`✅ Database connected successfully`);
 console.error(`❌ Failed to connect DB: ${error.message}`);

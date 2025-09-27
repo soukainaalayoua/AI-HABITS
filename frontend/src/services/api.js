@@ -1,10 +1,10 @@
 import axios from "axios";
 
-// Configuration pour contourner les problèmes CORS
+// Configuration pour Railway
 const isProduction = import.meta.env.PROD;
-const railwayURL = "https://backend-ai-habits-production.up.railway.app/api";
+const railwayURL = "http://backend-ai-habits-production.up.railway.app/api";
 
-// Utiliser directement Railway en production (CORS configuré côté backend)
+// Utiliser Railway en production
 const baseURL = isProduction
   ? railwayURL
   : import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";

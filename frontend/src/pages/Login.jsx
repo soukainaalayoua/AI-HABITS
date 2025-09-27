@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import api from "../services/api";
@@ -7,6 +7,8 @@ import { useAuth } from "../context/AuthContext";
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const isMountedRef = useRef(true);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,41 +18,57 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [needsVerification, setNeedsVerification] = useState(false);
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
   const handleChange = (e) => {
+    if (!isMountedRef.current) return;
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError(""); // Clear error when user types
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isMountedRef.current) return;
+
     setLoading(true);
     setError("");
 
     try {
       const res = await api.post("/auth/login", formData);
-      if (res.data.token) {
-        login(res.data.token);
-        navigate("/dashboard");
-      } else {
-        setError("Token de connexion manquant. Veuillez réessayer.");
+      if (isMountedRef.current) {
+        if (res.data.token) {
+          login(res.data.token);
+          navigate("/dashboard");
+        } else {
+          setError("Token de connexion manquant. Veuillez réessayer.");
+        }
       }
     } catch (err) {
       console.error("Login error:", err);
-      if (err.response?.data?.needsVerification) {
-        setNeedsVerification(true);
-        setError(
-          "Veuillez vérifier votre email avant de vous connecter. Vérifiez votre boîte de réception pour un email de vérification."
-        );
-      } else if (err.response?.data?.errors) {
-        setError(err.response.data.errors.join(", "));
-      } else {
-        setError(
-          err.response?.data?.message ||
-            "Erreur de connexion. Veuillez vérifier vos identifiants."
-        );
+      if (isMountedRef.current) {
+        if (err.response?.data?.needsVerification) {
+          setNeedsVerification(true);
+          setError(
+            "Veuillez vérifier votre email avant de vous connecter. Vérifiez votre boîte de réception pour un email de vérification."
+          );
+        } else if (err.response?.data?.errors) {
+          setError(err.response.data.errors.join(", "));
+        } else {
+          setError(
+            err.response?.data?.message ||
+              "Erreur de connexion. Veuillez vérifier vos identifiants."
+          );
+        }
       }
     } finally {
-      setLoading(false);
+      if (isMountedRef.current) {
+        setLoading(false);
+      }
     }
   };
 
@@ -203,19 +221,24 @@ export default function Login() {
                     <div className="mt-3">
                       <button
                         onClick={async () => {
+                          if (!isMountedRef.current) return;
                           try {
                             await api.post("/auth/resend-verification", {
                               email: formData.email,
                             });
-                            setError(
-                              "Email de vérification renvoyé ! Vérifiez votre boîte de réception."
-                            );
-                            setNeedsVerification(false);
+                            if (isMountedRef.current) {
+                              setError(
+                                "Email de vérification renvoyé ! Vérifiez votre boîte de réception."
+                              );
+                              setNeedsVerification(false);
+                            }
                           } catch (err) {
-                            setError(
-                              err.response?.data?.message ||
-                                "Erreur lors du renvoi de l'email"
-                            );
+                            if (isMountedRef.current) {
+                              setError(
+                                err.response?.data?.message ||
+                                  "Erreur lors du renvoi de l'email"
+                              );
+                            }
                           }
                         }}
                         className="text-cyan-400 hover:text-cyan-300 underline text-sm"

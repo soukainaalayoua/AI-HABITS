@@ -65,7 +65,6 @@ npm run dev
 ```env
 NODE_ENV=development
 PORT=3000
-FRONTEND_URL=http://localhost:5173
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database
 JWT_SECRET=your-jwt-secret
 OPENAI_API_KEY=your-openai-api-key
@@ -76,7 +75,7 @@ GMAIL_PASS=your-app-password
 ### Variables d'environnement Frontend (.env)
 
 ```env
-VITE_API_BASE_URL=http://localhost:3000/api
+VITE_API_BASE_URL=http://backend-ai-habits-production.up.railway.app/api
 ```
 
 ## 🎯 Utilisation
