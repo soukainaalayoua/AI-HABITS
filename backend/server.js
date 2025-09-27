@@ -16,39 +16,24 @@ const app = express();
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// Configuration CORS avec le package cors (plus fiable)
-const cors = require("cors");
+// --------------------
+// CORS Configuration
+// --------------------
+const allowedOrigins = [
+  "http://localhost:5173", // frontend dev
+  "https://ai-habit-frontend.vercel.app", // frontend prod
+];
 
-app.use(cors(corsOptions));
-
-// Log all requests with detailed CORS info
-app.use((req, res, next) => {
-  console.log(
-    `${new Date().toISOString()} - ${req.method} ${
-      req.path
-    } - Railway CORS Fixed v5.0`
-  );
-  console.log(`🔍 Request Headers Origin: ${req.headers.origin}`);
-  console.log(
-    `🔍 Request Headers User-Agent: ${req.headers["user-agent"]?.substring(
-      0,
-      50
-    )}...`
-  );
-  next();
-});
-
-// Health check endpoint
-app.get("/health", (req, res) => {
-  res.status(200).json({
-    status: "OK",
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || "development",
-    corsVersion: "v7.0",
-  });
-});
 const corsOptions = {
-  origin: "https://ai-habit-frontend.vercel.app", // ton frontend prod
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: [
@@ -61,27 +46,58 @@ const corsOptions = {
   ],
   optionsSuccessStatus: 200,
 };
-// CORS test endpoint
+
+// Apply CORS
+app.use(cors(corsOptions));
+
+// --------------------
+// Request Logging
+// --------------------
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  console.log(`🔍 Request Origin: ${req.headers.origin}`);
+  next();
+});
+
+// --------------------
+// Health & Test Endpoints
+// --------------------
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || "development",
+    corsVersion: "v8.0",
+  });
+});
+
 app.get("/cors-test", (req, res) => {
   res.status(200).json({
     message: "CORS test successful",
     origin: req.headers.origin,
     timestamp: new Date().toISOString(),
-    corsVersion: "v7.0",
+    corsVersion: "v8.0",
   });
 });
 
+// --------------------
 // API Routes
+// --------------------
 app.use("/api/auth", authRoutes);
 app.use("/api/habits", habitRoutes);
 app.use("/api/tracking", trackingRoutes);
 app.use("/api/contact", contactRoutes);
 
-// 404 handler - must be after all routes
+// --------------------
+// 404 Handler
+// --------------------
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
-// Global error handler - must be last
+
+// --------------------
+// Global Error Handler
+// --------------------
 app.use((err, req, res, next) => {
   console.error("Global error:", err);
   res.status(500).json({
@@ -93,7 +109,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Connect to database and start server
+// --------------------
+// Start Server
+// --------------------
 const PORT = process.env.PORT || 3000;
 connectDb()
   .then(() => {
@@ -101,7 +119,7 @@ connectDb()
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`📊 Health check: http://localhost:${PORT}/health`);
       console.log(`🔗 API Base URL: http://localhost:${PORT}/api`);
-      // Start cron after server is up
+      // Start cron job
       startReminderScheduler();
     });
   })
