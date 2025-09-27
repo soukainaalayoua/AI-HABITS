@@ -78,7 +78,7 @@ app.get("/health", (req, res) => {
     status: "OK",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || "development",
-    corsVersion: "v5.0",
+    corsVersion: "v6.0",
   });
 });
 
@@ -88,7 +88,7 @@ app.get("/cors-test", (req, res) => {
     message: "CORS test successful",
     origin: req.headers.origin,
     timestamp: new Date().toISOString(),
-    corsVersion: "v5.0",
+    corsVersion: "v6.0",
   });
 });
 
