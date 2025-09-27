@@ -19,21 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 // Configuration CORS avec le package cors (plus fiable)
 const cors = require("cors");
 
-const corsOptions = {
-  origin: "https://ai-habit-frontend.vercel.app",
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization",
-    "X-Requested-With",
-    "Accept",
-    "Origin",
-    "X-CSRF-Token",
-  ],
-  optionsSuccessStatus: 200,
-};
-
 app.use(cors(corsOptions));
 
 // Log all requests with detailed CORS info
@@ -62,7 +47,20 @@ app.get("/health", (req, res) => {
     corsVersion: "v7.0",
   });
 });
-
+const corsOptions = {
+  origin: "https://ai-habit-frontend.vercel.app", // ton frontend prod
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With",
+    "Accept",
+    "Origin",
+    "X-CSRF-Token",
+  ],
+  optionsSuccessStatus: 200,
+};
 // CORS test endpoint
 app.get("/cors-test", (req, res) => {
   res.status(200).json({
