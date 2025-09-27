@@ -20,26 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 const cors = require("cors");
 
 const corsOptions = {
-  origin: function (origin, callback) {
-    console.log(`🌐 CORS Request from: ${origin}`);
-
-    // Liste des origines autorisées
-    const allowedOrigins = ["https://ai-habit-frontend.vercel.app"];
-
-    // Autoriser les requêtes sans origine (Postman, curl, etc.)
-    if (!origin) {
-      console.log(`🔓 CORS Open for no-origin request`);
-      return callback(null, true);
-    }
-
-    if (allowedOrigins.includes(origin)) {
-      console.log(`✅ CORS Allowed for: ${origin}`);
-      return callback(null, true);
-    } else {
-      console.log(`❌ CORS Blocked for: ${origin}`);
-      return callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: "https://ai-habit-frontend.vercel.app",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: [
@@ -50,7 +31,7 @@ const corsOptions = {
     "Origin",
     "X-CSRF-Token",
   ],
-  optionsSuccessStatus: 200, // Pour les navigateurs legacy
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
@@ -78,7 +59,7 @@ app.get("/health", (req, res) => {
     status: "OK",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || "development",
-    corsVersion: "v6.0",
+    corsVersion: "v7.0",
   });
 });
 
@@ -88,7 +69,7 @@ app.get("/cors-test", (req, res) => {
     message: "CORS test successful",
     origin: req.headers.origin,
     timestamp: new Date().toISOString(),
-    corsVersion: "v6.0",
+    corsVersion: "v7.0",
   });
 });
 
